@@ -1,0 +1,15 @@
+div#logo {
+  text-align: center;
+  margin: 0 5%;
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    transform: scale(1.2);
+    transition: all 200ms ease;
+    border-bottom: solid black 1px;
+  }
+}
+
+button {
+  //   margin: 0 2%
+}
