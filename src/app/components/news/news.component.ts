@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Rx';
 import { Component, OnInit } from '@angular/core';
 
 import { Article, RssService } from '../../services/rss.service';
@@ -14,33 +15,57 @@ export class NewsComponent implements OnInit {
   constructor(public rssService: RssService) { }
 
   ngOnInit() {
-    this.rssService.getUSAToddayNews()
+    this.getStories();
+  }
+
+
+  public getStories(type = 'latest') {
+    this.rssService.getNews(type)
       .subscribe(articles => {
-        console.log(articles);
+        this.articles = [];
         articles.map((a, i) => {
           setTimeout(() => {
             this.articles.push(a);
-          }, 200 * i);
+          }, 1000 * i);
         });
       });
-    this.rssService.getBusinessInsiderNews()
+    this.rssService.getBusinessInsiderNews(type)
       .subscribe(articles => {
-        console.log(articles);
+        this.articles2 = [];
         articles.map((a, i) => {
           setTimeout(() => {
             this.articles2.push(a);
-          }, 200 * i);
+          }, 1000 * i);
         });
       });
-    this.rssService.getBuzzFeedNews()
-      .subscribe(articles => {
+    this.rssService.getBuzzFeedNews(type)
+      .subscribe(
+      articles => {
+        this.articles3 = [];
         console.log(articles);
         articles.map((a, i) => {
           setTimeout(() => {
             this.articles3.push(a);
-          }, 200 * i);
+          }, 1000 * i);
         });
       });
+
+  }
+
+  readMore(article: Article) {
+    window.open(article.url);
+
+  }
+
+  favorThis(article: Article) {
+
+  }
+  unfavorThis(article: Article) {
+
+  }
+
+  isFavor(article: Article) {
+
   }
 
 }

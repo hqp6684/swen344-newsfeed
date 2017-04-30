@@ -1,18 +1,11 @@
 <div fxLayout="column" style="width:250px;">
   <md-card *ngFor="let article of articles">
-    <!--<a href="">-->
     <h4 routerLink="/sample-news-article">{{article.title}}</h4>
-    <!--</a>-->
     <md-card-subtitle style="margin-bottom: 0">{{article.author}}</md-card-subtitle>
     <md-card-subtitle>{{article.publishedAt|date:'medium'}}</md-card-subtitle>
     <img src="{{article.urlToImage}}" alt="" md-card-image="">
 
     <md-card-content>{{article.description}}</md-card-content>
-    <!--<md-card-actions align="end">
-      <button md-icon-button>
-        <md-icon>read</md-icon>
-      </button>
-    </md-card-actions>-->
   </md-card>
 
 </div>

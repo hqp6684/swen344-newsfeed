@@ -1,39 +1,13 @@
 <md-toolbar>
   <div id="logo" routerLink="/home">
-    <h1>DPA</h1>
+    <h1>News Outlet</h1>
   </div>
-  <button md-button="" color="primary" routerLink="/news"><strong>News Media</strong></button>
-  <button md-button="" color="primary"><strong>Scholar Journals</strong></button>
-  <button md-button="" color="primary"><strong>Petitions</strong></button>
-  <button md-button="" color="primary"><strong>Debate</strong></button>
+  <!--<button md-button="" color="primary" routerLink="/news"><strong>News Media</strong></button>
+  <button md-button="" color="primary"><strong>Scholar Journals</strong></button>-->
 
   <span fxFlex="1 1 auto"></span>
   <!--(button[md-icon-button]>md-icon{})*2-->
-  <button md-icon-button="">
-    <md-icon>search</md-icon>
-  </button>
-  <button md-icon-button="" md-tooltip="">
-    <md-icon>account_circle</md-icon>
-  </button>
-  <button md-icon-button="" md-tooltip="Settings" [mdMenuTriggerFor]="menu">
-    <md-icon>settings</md-icon>
-  </button>
+  <button md-button (click)="rssService.login()" *ngIf="!rssService.isAuthenticated()"><strong>LOG IN</strong></button>
+  <span *ngIf="rssService.isAuthenticated()">Last visit : {{rssService.last_visit_time| date:'medium'}}</span>
+  <button md-button (click)="rssService.logout()" *ngIf="rssService.isAuthenticated()"><strong>LOG OUT</strong></button>
 </md-toolbar>
-<md-menu #menu="mdMenu">
-  <button md-menu-item>
-    <md-icon>format_size</md-icon>
-    <span>Font size</span>
-  </button>
-  <button md-menu-item>
-    <md-icon>invert_colors</md-icon>
-    <span>Color blind</span>
-  </button>
-  <button md-menu-item>
-    <md-icon>notifications_off</md-icon>
-    <span>Disable alerts</span>
-  </button>
-  <button md-menu-item>
-    <md-icon>language</md-icon>
-    <span>Language</span>
-  </button>
-</md-menu>

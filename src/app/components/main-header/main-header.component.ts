@@ -1,3 +1,4 @@
+import { RssService } from '../../services/rss.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainHeaderComponent implements OnInit {
 
-  constructor() { }
+  constructor(public rssService: RssService) {
+  }
 
   ngOnInit() {
   }

@@ -1,9 +1,8 @@
 <md-toolbar color="accent">
   <!--(button[md-button]>{Category $})*5-->
-  <button md-button="">Top stoties</button>
-  <button md-button="">Most viewed stories</button>
-  <button md-button="">Dakota Piple Line Exclusive</button>
-  <button md-button="">Other</button>
+  <button md-button="" (click)="getStories('top')"><strong>Top Stories</strong></button>
+  <button md-button (click)="this.getStories()"><strong>Latest Stories</strong></button>
+  <button md-button=""><strong>My Favorites</strong></button>
 
   <span fxFlex="1 1 auto"></span>
   <!--(button[md-icon-button]>md-icon{})*2-->
@@ -18,26 +17,34 @@
   <div fxFlex="33%" fxFlex.sm="100%" fxFlex.xs="100%">
     <div fxLayout="column">
       <div style="padding: 3%">
-        <h2>Top CNN Stories</h2>
-        <md-card *ngFor="let article of articles.slice(0,1)">
+        <h2>Hacker News</h2>
+        <md-card *ngFor="let article of articles">
           <!--<a href="">-->
-          <h3 routerLink="/sample-news-article" class="click-me">{{article.title}}</h3>
+          <h3 class="click-me" (click)="this.readMore(article)">{{article.title}}</h3>
           <!--</a>-->
           <md-card-subtitle style="margin-bottom: 0">{{article.author}}</md-card-subtitle>
           <md-card-subtitle>{{article.publishedAt|date:'medium'}}</md-card-subtitle>
           <img src="{{article.urlToImage}}" alt="" md-card-image="">
           <md-card-content>{{article.description}}</md-card-content>
+          <md-card-actions align="end">
+            <button md-button="" (click)="this.readMore(article)"><strong>READ MORE</strong></button>
+            <button md-icon-button="" md-tooltip="Add to favorite list" *ngIf="!this.isFavor(article);">
+              <md-icon>favorite_border</md-icon>
+            </button>
+            <button md-icon-button="" md-tooltip="Remove from favorite list" *ngIf="this.isFavor(article);">
+              <md-icon>favorite</md-icon>
+            </button>
+          </md-card-actions>
         </md-card>
         <div>
-          <div *ngFor="let article of articles; let i = index" style="border-bottom: 1px solid #455A64">
+          <!--<div *ngFor="let article of articles; let i = index" style="border-bottom: 1px solid #455A64">
             <ng-container *ngIf="i===2">
               <h3 style="margin: 8px" routerLink="/sample-news-article" class="click-me">{{article.title}}</h3>
             </ng-container>
             <ng-container *ngIf="i>2">
               <h4 style="margin: 8px" routerLink="/sample-news-article" class="click-me">{{article.title}}</h4>
             </ng-container>
-          </div>
-
+          </div>-->
         </div>
       </div>
     </div>
@@ -47,8 +54,8 @@
   <div fxFlex="33%" fxFlex.sm="100%" fxFlex.xs="100%">
     <div fxLayout="column">
       <div style="padding: 3%">
-        <h2>Top Business Insider Stories</h2>
-        <md-card *ngFor="let article of articles2.slice(0,1)">
+        <h2>Business Insider</h2>
+        <md-card *ngFor="let article of articles2">
           <!--<a href="">-->
           <img src="{{article.urlToImage}}" alt="" md-card-image="">
           <h3 routerLink="/sample-news-article" class="click-me">{{article.title}}</h3>
@@ -58,7 +65,7 @@
           <md-card-content>{{article.description}}</md-card-content>
         </md-card>
         <div>
-          <div *ngFor="let article of articles2; let i = index" style="border-bottom: 1px solid #455A64">
+          <!--<div *ngFor="let article of articles2; let i = index" style="border-bottom: 1px solid #455A64">
             <ng-container *ngIf="i===2">
               <h3 routerLink="/sample-news-article" class="click-me" style="margin: 8px">{{article.title}}</h3>
             </ng-container>
@@ -67,6 +74,7 @@
             </ng-container>
           </div>
 
+        </div>-->
         </div>
       </div>
     </div>
@@ -76,8 +84,8 @@
   <div fxFlex="33%" fxFlex.sm="100%" fxFlex.xs="100%">
     <div fxLayout="column">
       <div style="padding: 3%">
-        <h2>BuzzFeed</h2>
-        <md-card *ngFor="let article of articles3.slice(0,1)">
+        <h2>Reddit</h2>
+        <md-card *ngFor="let article of articles3">
           <!--<a href="">-->
           <img src="{{article.urlToImage}}" alt="" md-card-image="">
           <h3 routerLink="/sample-news-article" class="click-me">{{article.title}}</h3>
@@ -86,7 +94,7 @@
           <md-card-subtitle>{{article.publishedAt|date:'medium'}}</md-card-subtitle>
           <md-card-content>{{article.description}}</md-card-content>
         </md-card>
-        <div>
+        <!--<div>
           <div *ngFor="let article of articles3; let i = index" style="border-bottom: 1px solid #455A64">
             <ng-container *ngIf="i===2">
               <h3 style="margin: 8px" routerLink="/sample-news-article" class="click-me">{{article.title}}</h3>
@@ -96,7 +104,7 @@
             </ng-container>
           </div>
 
-        </div>
+        </div>-->
       </div>
     </div>
   </div>
