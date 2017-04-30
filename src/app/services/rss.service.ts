@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs/Rx';
+import { BehaviorSubject, Observable } from 'rxjs/Rx';
 import { Http } from '@angular/http';
 import { Injectable } from '@angular/core';
 import { tokenNotExpired } from 'angular2-jwt';
@@ -9,7 +9,7 @@ import Auth0Lock from 'auth0-lock';
 export class RssService {
   private lock = new Auth0Lock('nbpw8VSBhrjfONvZwh97xnHf27lq5fWf', 'hpham.auth0.com', {
     auth: {
-      redirectUrl: location.origin + '/home',
+      redirectUrl: location.origin + '/~hqp6684/news/',
       responseType: 'token',
     }
   });
@@ -23,7 +23,8 @@ export class RssService {
   private accountProfile: any;
   public last_visit_time = '';
 
-  public my_favorite: Array<Article> = [];
+  public my_favorite: BehaviorSubject<Array<Article>> = new BehaviorSubject([]);
+
 
   constructor(private http: Http, private router: Router) {
     this.checkAuthenticated();
@@ -72,13 +73,38 @@ export class RssService {
 
 
 
+  addNewFavorite(article: Article) {
+    let alreadyAdded = false;
+    const temp = this.my_favorite.value;
+    temp.map(art => {
+      if (art.url === article.url) {
+        alreadyAdded = true;
+      }
+    });
+    if (alreadyAdded) {
 
+    } else {
+      temp.push(article);
+      localStorage.setItem('my_favorite', JSON.stringify(temp));
+    }
+    this.my_favorite.next(temp);
+
+  }
+
+  removeFavorite(article: Article) {
+    const temp = this.my_favorite.value;
+    temp.splice(temp.indexOf(article), 1);
+    localStorage.setItem('my_favorite', JSON.stringify(temp));
+    this.my_favorite.next(temp);
+
+  }
 
   // authendication
   public checkAuthenticated() {
     if (this.isAuthenticated()) {
       this.id_token = localStorage.getItem('id_token');
-      this.my_favorite = JSON.parse(localStorage.getItem('my_favorite'));
+      const temp = JSON.parse(localStorage.getItem('my_favorite'));
+      this.my_favorite.next(temp);
     }
     if (localStorage.getItem('last_visit')) {
       this.last_visit_time = localStorage.getItem('last_visit');

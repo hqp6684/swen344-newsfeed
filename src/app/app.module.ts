@@ -18,6 +18,7 @@ import { NewsComponent } from './components/news/news.component';
 import { JournalsComponent } from './components/journals/journals.component';
 import { PetitionsComponent } from './components/petitions/petitions.component';
 import { SampleNewsArticleComponent } from './components/sample-news-article/sample-news-article.component';
+import { FavoritesComponent } from './components/favorites/favorites.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { SampleNewsArticleComponent } from './components/sample-news-article/sam
     NewsComponent,
     JournalsComponent,
     PetitionsComponent,
-    SampleNewsArticleComponent
+    SampleNewsArticleComponent,
+    FavoritesComponent
   ],
   imports: [
     BrowserModule,

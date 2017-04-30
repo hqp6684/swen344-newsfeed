@@ -1,5 +1,6 @@
-import { Observable } from 'rxjs/Rx';
+import { AsyncSubject, Observable } from 'rxjs/Rx';
 import { Component, OnInit } from '@angular/core';
+import { MdSnackBar } from '@angular/material';
 
 import { Article, RssService } from '../../services/rss.service';
 
@@ -12,7 +13,7 @@ export class NewsComponent implements OnInit {
   articles: Article[] = new Array();
   articles2: Article[] = new Array();
   articles3: Article[] = new Array();
-  constructor(public rssService: RssService) { }
+  constructor(public rssService: RssService, public snackBar: MdSnackBar) { }
 
   ngOnInit() {
     this.getStories();
@@ -42,7 +43,7 @@ export class NewsComponent implements OnInit {
       .subscribe(
       articles => {
         this.articles3 = [];
-        console.log(articles);
+        // console.log(articles);
         articles.map((a, i) => {
           setTimeout(() => {
             this.articles3.push(a);
@@ -58,13 +59,27 @@ export class NewsComponent implements OnInit {
   }
 
   favorThis(article: Article) {
+    if (this.rssService.isAuthenticated()) {
+      this.rssService.addNewFavorite(article);
+      this.snackBar.open(`${article.title} has been added`, 'Dismiss', { duration: 2000 });
 
+    } else {
+      this.snackBar.open('Please log in to add your favorite news', 'Dismiss', { duration: 10000 });
+    }
   }
   unfavorThis(article: Article) {
 
   }
 
   isFavor(article: Article) {
+    let alreadyAdded = false;
+    this.rssService.my_favorite.value.map(art => {
+      if (art.url === article.url) {
+        alreadyAdded = true;
+      }
+
+    });
+    return alreadyAdded;
 
   }
 

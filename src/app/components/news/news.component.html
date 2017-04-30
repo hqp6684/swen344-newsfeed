@@ -2,15 +2,15 @@
   <!--(button[md-button]>{Category $})*5-->
   <button md-button="" (click)="getStories('top')"><strong>Top Stories</strong></button>
   <button md-button (click)="this.getStories()"><strong>Latest Stories</strong></button>
-  <button md-button=""><strong>My Favorites</strong></button>
+  <button md-button="" *ngIf="this.rssService.isAuthenticated()" routerLink="/favorites"><strong>My Favorites</strong></button>
 
   <span fxFlex="1 1 auto"></span>
   <!--(button[md-icon-button]>md-icon{})*2-->
-  <button md-icon-button="">
+  <!--<button md-icon-button="">
     <md-icon>search</md-icon>
   </button><button md-icon-button="" md-tooltip="Open Sorting Menu">
     <md-icon>sort</md-icon>
-  </button>
+  </button>-->
 
 </md-toolbar>
 <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
@@ -18,6 +18,7 @@
     <div fxLayout="column">
       <div style="padding: 3%">
         <h2>Hacker News</h2>
+        <hr>
         <md-card *ngFor="let article of articles">
           <!--<a href="">-->
           <h3 class="click-me" (click)="this.readMore(article)">{{article.title}}</h3>
@@ -28,23 +29,17 @@
           <md-card-content>{{article.description}}</md-card-content>
           <md-card-actions align="end">
             <button md-button="" (click)="this.readMore(article)"><strong>READ MORE</strong></button>
-            <button md-icon-button="" md-tooltip="Add to favorite list" *ngIf="!this.isFavor(article);">
+            <span #favoriteButton>
+              <button md-icon-button="" md-tooltip="Add to favorite list" (click)="favoriteButton.style.display = 'none'; this.favorThis(article)" *ngIf="!this.isFavor(article)">
               <md-icon>favorite_border</md-icon>
             </button>
-            <button md-icon-button="" md-tooltip="Remove from favorite list" *ngIf="this.isFavor(article);">
+            </span>
+            <!--<button md-icon-button="" md-tooltip="Remove from favorite list" *ngIf="this.isFavor(article);">
               <md-icon>favorite</md-icon>
-            </button>
+            </button>-->
           </md-card-actions>
         </md-card>
         <div>
-          <!--<div *ngFor="let article of articles; let i = index" style="border-bottom: 1px solid #455A64">
-            <ng-container *ngIf="i===2">
-              <h3 style="margin: 8px" routerLink="/sample-news-article" class="click-me">{{article.title}}</h3>
-            </ng-container>
-            <ng-container *ngIf="i>2">
-              <h4 style="margin: 8px" routerLink="/sample-news-article" class="click-me">{{article.title}}</h4>
-            </ng-container>
-          </div>-->
         </div>
       </div>
     </div>
@@ -58,11 +53,22 @@
         <md-card *ngFor="let article of articles2">
           <!--<a href="">-->
           <img src="{{article.urlToImage}}" alt="" md-card-image="">
-          <h3 routerLink="/sample-news-article" class="click-me">{{article.title}}</h3>
+          <h3 class="click-me" (click)="this.readMore(article)">{{article.title}}</h3>
           <!--</a>-->
           <md-card-subtitle style="margin-bottom: 0">{{article.author}}</md-card-subtitle>
           <md-card-subtitle>{{article.publishedAt|date:'medium'}}</md-card-subtitle>
           <md-card-content>{{article.description}}</md-card-content>
+          <md-card-actions align="end">
+            <button md-button="" (click)="this.readMore(article)"><strong>READ MORE</strong></button>
+            <span #favoriteButton>
+              <button md-icon-button="" md-tooltip="Add to favorite list" (click)="favoriteButton.style.display = 'none'; this.favorThis(article)" *ngIf="!this.isFavor(article)">
+              <md-icon>favorite_border</md-icon>
+            </button>
+            </span>
+            <!--<button md-icon-button="" md-tooltip="Remove from favorite list" *ngIf="this.isFavor(article);">
+              <md-icon>favorite</md-icon>
+            </button>-->
+          </md-card-actions>
         </md-card>
         <div>
           <!--<div *ngFor="let article of articles2; let i = index" style="border-bottom: 1px solid #455A64">
@@ -85,14 +91,26 @@
     <div fxLayout="column">
       <div style="padding: 3%">
         <h2>Reddit</h2>
+        <hr>
         <md-card *ngFor="let article of articles3">
           <!--<a href="">-->
-          <img src="{{article.urlToImage}}" alt="" md-card-image="">
-          <h3 routerLink="/sample-news-article" class="click-me">{{article.title}}</h3>
+          <h3 class="click-me" (click)="this.readMore(article)">{{article.title}}</h3>
           <!--</a>-->
           <md-card-subtitle style="margin-bottom: 0">{{article.author}}</md-card-subtitle>
           <md-card-subtitle>{{article.publishedAt|date:'medium'}}</md-card-subtitle>
+          <img src="{{article.urlToImage}}" alt="" md-card-image="">
           <md-card-content>{{article.description}}</md-card-content>
+          <md-card-actions align="end">
+            <button md-button="" (click)="this.readMore(article)"><strong>READ MORE</strong></button>
+            <span #favoriteButton>
+              <button md-icon-button="" md-tooltip="Add to favorite list" (click)="favoriteButton.style.display = 'none'; this.favorThis(article)" *ngIf="!this.isFavor(article)">
+              <md-icon>favorite_border</md-icon>
+            </button>
+            </span>
+            <!--<button md-icon-button="" md-tooltip="Remove from favorite list" *ngIf="this.isFavor(article);">
+              <md-icon>favorite</md-icon>
+            </button>-->
+          </md-card-actions>
         </md-card>
         <!--<div>
           <div *ngFor="let article of articles3; let i = index" style="border-bottom: 1px solid #455A64">
