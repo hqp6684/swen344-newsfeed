@@ -9,7 +9,7 @@ import Auth0Lock from 'auth0-lock';
 export class RssService {
   private lock = new Auth0Lock('nbpw8VSBhrjfONvZwh97xnHf27lq5fWf', 'hpham.auth0.com', {
     auth: {
-      redirectUrl: location.origin + '/~hqp6684/news/',
+      redirectUrl: location.origin + '//news/',
       responseType: 'token',
     }
   });

@@ -3,18 +3,15 @@
   <button md-button="" (click)="getStories('top')"><strong>Top Stories</strong></button>
   <button md-button (click)="this.getStories()"><strong>Latest Stories</strong></button>
   <button md-button="" *ngIf="this.rssService.isAuthenticated()" routerLink="/favorites"><strong>My Favorites</strong></button>
-
   <span fxFlex="1 1 auto"></span>
-  <!--(button[md-icon-button]>md-icon{})*2-->
-  <!--<button md-icon-button="">
-    <md-icon>search</md-icon>
-  </button><button md-icon-button="" md-tooltip="Open Sorting Menu">
-    <md-icon>sort</md-icon>
-  </button>-->
-
+</md-toolbar>
+<md-toolbar color="primary">
+  <md-checkbox [(ngModel)]="show1">Hacker News</md-checkbox>
+  <md-checkbox [(ngModel)]="show2">Business Insider</md-checkbox>
+  <md-checkbox [(ngModel)]="show3">Reddit</md-checkbox>
 </md-toolbar>
 <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
-  <div fxFlex="33%" fxFlex.sm="100%" fxFlex.xs="100%">
+  <div fxFlex="33%" fxFlex.sm="100%" fxFlex.xs="100%" *ngIf="show1">
     <div fxLayout="column">
       <div style="padding: 3%">
         <h2>Hacker News</h2>
@@ -46,7 +43,7 @@
 
   </div>
   <!--COLUMN 2-->
-  <div fxFlex="33%" fxFlex.sm="100%" fxFlex.xs="100%">
+  <div fxFlex="33%" fxFlex.sm="100%" fxFlex.xs="100%" *ngIf="show2">
     <div fxLayout="column">
       <div style="padding: 3%">
         <h2>Business Insider</h2>
@@ -87,7 +84,7 @@
   </div>
 
   <!--COLUMN 3-->
-  <div fxFlex="33%" fxFlex.sm="100%" fxFlex.xs="100%">
+  <div fxFlex="33%" fxFlex.sm="100%" fxFlex.xs="100%" *ngIf="show3">
     <div fxLayout="column">
       <div style="padding: 3%">
         <h2>Reddit</h2>

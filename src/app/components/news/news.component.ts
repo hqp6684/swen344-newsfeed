@@ -13,6 +13,10 @@ export class NewsComponent implements OnInit {
   articles: Article[] = new Array();
   articles2: Article[] = new Array();
   articles3: Article[] = new Array();
+
+  show1 = true;
+  show2 = true;
+  show3 = true;
   constructor(public rssService: RssService, public snackBar: MdSnackBar) { }
 
   ngOnInit() {
