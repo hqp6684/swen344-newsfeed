@@ -10,7 +10,7 @@
       <md-list-item *ngFor="let article of this.articles">
         <img md-list-avatar src="{{article.urlToImage}}" alt="...">
         <h3 md-line class="click-me" (click)="this.readMore(article)"> {{article.title}} </h3>
-        <p md-line>
+        <p md-line (click)="this.readMore(article)" class="click-me">
           <span> {{article.description}} </span>
         </p>
         <p md-line="">{{article.publishedAt|date:'medium'}}</p>

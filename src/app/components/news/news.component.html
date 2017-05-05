@@ -7,7 +7,7 @@
 </md-toolbar>
 <md-toolbar color="primary">
   <md-checkbox [(ngModel)]="show1">Hacker News</md-checkbox>
-  <md-checkbox [(ngModel)]="show2">Business Insider</md-checkbox>
+  <md-checkbox [(ngModel)]="show2">News API</md-checkbox>
   <md-checkbox [(ngModel)]="show3">Reddit</md-checkbox>
 </md-toolbar>
 <div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" cdk-scrollable #sidenavContainer>
@@ -46,11 +46,12 @@
   <div fxFlex="33%" fxFlex.sm="100%" fxFlex.xs="100%" *ngIf="show2">
     <div fxLayout="column">
       <div style="padding: 3%">
-        <h2>Business Insider</h2>
+        <h2>News</h2>
         <md-card *ngFor="let article of articles2">
           <!--<a href="">-->
           <img src="{{article.urlToImage}}" alt="" md-card-image="">
-          <h3 class="click-me" (click)="this.readMore(article)">{{article.title}}</h3>
+          <h3 class="click-me" (click)="this.readMore(article)">{{article.name}}</h3>
+          <md-card-subtitle>{{article.category}} </md-card-subtitle>
           <!--</a>-->
           <md-card-subtitle style="margin-bottom: 0">{{article.author}}</md-card-subtitle>
           <md-card-subtitle>{{article.publishedAt|date:'medium'}}</md-card-subtitle>

@@ -10,6 +10,7 @@ export class RssService {
   private lock = new Auth0Lock('nbpw8VSBhrjfONvZwh97xnHf27lq5fWf', 'hpham.auth0.com', {
     auth: {
       redirectUrl: location.origin + '/~hqp6684/news/',
+      // redirectUrl: location.origin + '/home',
       responseType: 'token',
     }
   });
@@ -33,6 +34,7 @@ export class RssService {
   getNews(type = 'latest'): Observable<Article[]> {
     // const url = `https://newsapi.org/v1/articles?source=the-new-york-times&sortBy=${type}&apiKey=cc2a1d5345144cc593cba8cf78833a30`;
     const url = `https://newsapi.org/v1/articles?source=hacker-news&sortBy=${type}&apiKey=cc2a1d5345144cc593cba8cf78833a30`;
+    // const url = `https://newsapi.org/v1/sources?language=en&sortBysAvailable=${type}`;
     return this.http.get(url)
       .map(res => {
         const result: NewsResult = res.json();
@@ -42,7 +44,8 @@ export class RssService {
 
   getUSAToddayNews(type = 'latest') {
 
-    const url = `https://newsapi.org/v1/articles?source=usa-today&sortBy=${type}&apiKey=cc2a1d5345144cc593cba8cf78833a30`;
+    // const url = `https://newsapi.org/v1/articles?source=usa-today&sortBy=${type}&apiKey=cc2a1d5345144cc593cba8cf78833a30`;
+    const url = `https://newsapi.org/v1/sources?language=en`;
     return this.http.get(url)
       .map(res => {
         const result: NewsResult = res.json();
@@ -53,11 +56,12 @@ export class RssService {
   }
 
   getBusinessInsiderNews(type = 'latest') {
-    const url = `https://newsapi.org/v1/articles?source=business-insider-uk&sortBy=${type}&apiKey=cc2a1d5345144cc593cba8cf78833a30`;
+    // const url = `https://newsapi.org/v1/articles?source=business-insider-uk&sortBy=${type}&apiKey=cc2a1d5345144cc593cba8cf78833a30`;
+    const url = `https://newsapi.org/v1/sources?language=en`;
     return this.http.get(url)
       .map(res => {
         const result: NewsResult = res.json();
-        return result.articles;
+        return result.sources;
       });
   }
 
@@ -192,6 +196,7 @@ export interface NewsResult {
   status: 'ok' | string;
   source: string;
   articles: Article[];
+  sources: Source[];
 }
 export interface Article {
   title: string;
@@ -200,6 +205,19 @@ export interface Article {
   urlToImage: string;
   author: string;
   description: string;
+}
+export interface Source {
+  id: string;
+  name: string;
+  url: string;
+  description: string;
+  category: string;
+  urlsTologos: {
+    small: string;
+    medium: string;
+    large: string;
+  };
+
 }
 
 

@@ -2,7 +2,7 @@ import { AsyncSubject, Observable } from 'rxjs/Rx';
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { MdSnackBar, ScrollDispatcher } from '@angular/material';
 
-import { Article, RssService } from '../../services/rss.service';
+import { Article, RssService, Source } from '../../services/rss.service';
 import { Scrollable } from '@angular/material/typings/core/overlay/scroll/scrollable';
 // import {} from '@'
 
@@ -13,7 +13,7 @@ import { Scrollable } from '@angular/material/typings/core/overlay/scroll/scroll
 })
 export class NewsComponent implements OnInit, AfterViewInit {
   articles: Article[] = new Array();
-  articles2: Article[] = new Array();
+  articles2: Source[] = new Array();
   articles3: Article[] = new Array();
 
   show1 = true;
@@ -32,12 +32,15 @@ export class NewsComponent implements OnInit, AfterViewInit {
     this.getStories();
   }
   ngAfterViewInit() {
+    this.scrollable = this.sd.getScrollContainers(this.sidenavContainer)[0];
+    // console.log(this.scrollable);
+    this.nativeEl = this.scrollable.getElementRef().nativeElement;
     this.sd.getScrollContainers(this.sidenavContainer).map(scrollable => {
-      if (scrollable.getElementRef().nativeElement === this.sidenavContainer.nativeElement) {
-        this.scrollable = scrollable;
-        this.nativeEl = this.scrollable.getElementRef().nativeElement;
-      }
-      console.log(scrollable);
+      // if (scrollable.getElementRef().nativeElement === this.sidenavContainer.nativeElement) {
+      //   this.scrollable = scrollable;
+      //   this.nativeEl = this.scrollable.getElementRef().nativeElement;
+      // }
+      // console.log(scrollable);
     });
     this.scrollable.elementScrolled()
       .debounceTime(100)
@@ -46,7 +49,7 @@ export class NewsComponent implements OnInit, AfterViewInit {
         const a = this.nativeEl.scrollTop;
         const b = this.nativeEl.scrollHeight - this.nativeEl.clientHeight;
         const c = a / b;
-        console.log(c);
+        // console.log(c);
 
       });
   }
@@ -59,7 +62,7 @@ export class NewsComponent implements OnInit, AfterViewInit {
         articles.map((a, i) => {
           setTimeout(() => {
             this.articles.push(a);
-          }, 1000 * i);
+          }, 1500 * i);
         });
       });
     this.rssService.getBusinessInsiderNews(type)
@@ -68,7 +71,7 @@ export class NewsComponent implements OnInit, AfterViewInit {
         articles.map((a, i) => {
           setTimeout(() => {
             this.articles2.push(a);
-          }, 1000 * i);
+          }, 1112 * i);
         });
       });
     this.rssService.getBuzzFeedNews(type)
@@ -79,7 +82,7 @@ export class NewsComponent implements OnInit, AfterViewInit {
         articles.map((a, i) => {
           setTimeout(() => {
             this.articles3.push(a);
-          }, 1000 * i);
+          }, 2000 * i);
         });
       });
 
