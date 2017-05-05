@@ -10,7 +10,7 @@
   <md-checkbox [(ngModel)]="show2">Business Insider</md-checkbox>
   <md-checkbox [(ngModel)]="show3">Reddit</md-checkbox>
 </md-toolbar>
-<div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column">
+<div fxLayout="row" fxLayout.sm="column" fxLayout.xs="column" cdk-scrollable #sidenavContainer>
   <div fxFlex="33%" fxFlex.sm="100%" fxFlex.xs="100%" *ngIf="show1">
     <div fxLayout="column">
       <div style="padding: 3%">

@@ -1,15 +1,17 @@
 import { AsyncSubject, Observable } from 'rxjs/Rx';
-import { Component, OnInit } from '@angular/core';
-import { MdSnackBar } from '@angular/material';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { MdSnackBar, ScrollDispatcher } from '@angular/material';
 
 import { Article, RssService } from '../../services/rss.service';
+import { Scrollable } from '@angular/material/typings/core/overlay/scroll/scrollable';
+// import {} from '@'
 
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html',
   styleUrls: ['./news.component.scss']
 })
-export class NewsComponent implements OnInit {
+export class NewsComponent implements OnInit, AfterViewInit {
   articles: Article[] = new Array();
   articles2: Article[] = new Array();
   articles3: Article[] = new Array();
@@ -17,10 +19,36 @@ export class NewsComponent implements OnInit {
   show1 = true;
   show2 = true;
   show3 = true;
-  constructor(public rssService: RssService, public snackBar: MdSnackBar) { }
+
+  scrollable: Scrollable;
+  nativeEl: HTMLDivElement;
+  @ViewChild('sidenavContainer') sidenavContainer: ElementRef;
+
+  constructor(public rssService: RssService, public snackBar: MdSnackBar,
+    public sd: ScrollDispatcher
+  ) { }
 
   ngOnInit() {
     this.getStories();
+  }
+  ngAfterViewInit() {
+    this.sd.getScrollContainers(this.sidenavContainer).map(scrollable => {
+      if (scrollable.getElementRef().nativeElement === this.sidenavContainer.nativeElement) {
+        this.scrollable = scrollable;
+        this.nativeEl = this.scrollable.getElementRef().nativeElement;
+      }
+      console.log(scrollable);
+    });
+    this.scrollable.elementScrolled()
+      .debounceTime(100)
+      .subscribe(event => {
+        // console.log(this.sidenavContainer.nativeElement)
+        const a = this.nativeEl.scrollTop;
+        const b = this.nativeEl.scrollHeight - this.nativeEl.clientHeight;
+        const c = a / b;
+        console.log(c);
+
+      });
   }
 
 
